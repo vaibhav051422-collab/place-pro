@@ -1,0 +1,137 @@
+body{
+    margin:0;
+    padding:0;
+    background:#f4f7fb;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.report-container{
+    max-width:1100px;
+    margin:40px auto;
+    padding:30px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.header h1{
+    color:#2563eb;
+    margin-bottom:5px;
+}
+
+.header p{
+    color:#666;
+}
+
+.score-card{
+    background:white;
+    border-radius:18px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    margin-bottom:30px;
+}
+
+.score{
+    font-size:70px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.card h2{
+    margin-top:0;
+    color:#2563eb;
+}
+
+.progress{
+    width:100%;
+    height:12px;
+    background:#ddd;
+    border-radius:30px;
+    margin-top:5px;
+    margin-bottom:20px;
+}
+
+.fill{
+    height:12px;
+    background:#2563eb;
+    border-radius:30px;
+}
+
+.badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.badge{
+    background:#2563eb;
+    color:white;
+    padding:8px 14px;
+    border-radius:20px;
+    font-size:14px;
+}
+
+.project{
+    padding:12px;
+    margin-bottom:10px;
+    background:#eef4ff;
+    border-radius:10px;
+}
+
+.suggestion{
+    padding:12px;
+    margin-bottom:10px;
+    background:#fff8e6;
+    border-left:5px solid orange;
+    border-radius:8px;
+}
+
+.info p{
+    margin:8px 0;
+}
+.score-card svg{
+    display:block;
+    margin:auto;
+}
+
+.score-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.score-card h2{
+    margin-top:20px;
+    margin-bottom:5px;
+}
+
+.score-card p{
+    color:#666;
+}
+
+.badge{
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.badge:hover{
+    transform:translateY(-3px);
+    box-shadow:0 6px 15px rgba(37,99,235,.3);
+}

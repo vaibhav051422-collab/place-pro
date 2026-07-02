@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey, Text
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
@@ -28,4 +28,9 @@ class Resume(Base):
     file_path = Column(
         String,
         nullable=False
+    )
+
+    resume_text = Column(
+        Text,
+        nullable=True
     )

@@ -16,6 +16,8 @@ function ResumeUpload() {
     try {
       const token = localStorage.getItem("token");
 
+      console.log("Sending Token:", token);
+
       const res = await api.post(
         "/api/resume/upload",
         formData,
@@ -26,9 +28,22 @@ function ResumeUpload() {
         }
       );
 
-      alert(res.data.message);
+      console.log("Success:", res.data);
+
+      // Save complete ATS report
+      localStorage.setItem(
+        "atsReport",
+        JSON.stringify(res.data)
+      );
+
+      // Redirect to ATS Report page
+      window.location.href = "/report";
+
     } catch (err) {
+      console.log("Status:", err.response?.status);
+      console.log("Response:", err.response?.data);
       console.error(err);
+
       alert("Upload Failed");
     }
   };
@@ -43,7 +58,8 @@ function ResumeUpload() {
         onChange={(e) => setFile(e.target.files[0])}
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <button onClick={uploadResume}>
         Upload Resume
