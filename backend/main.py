@@ -2,6 +2,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 import os
 
+from app.routes.placement import router as placement_router
 from app.routes.auth import router as auth_router
 from app.routes.resume import router as resume_router
 from app.routes.job import router as job_router
@@ -44,6 +45,12 @@ app.include_router(
     job_router,
     prefix="/api/job",
     tags=["Job Matching"]
+)
+
+app.include_router(
+    placement_router,
+    prefix="/api/placement",
+    tags=["Placement"]
 )
 
 @app.get("/")

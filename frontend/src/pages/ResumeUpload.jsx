@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
+import Navbar from "../components/Navbar";
 
 function ResumeUpload() {
   const [file, setFile] = useState(null);
@@ -49,7 +50,9 @@ function ResumeUpload() {
   };
 
   return (
-    <div style={{ padding: "40px" }}>
+        <>
+        <Navbar />
+     <div style={{ padding: "40px" }}>
       <h2>Upload Resume</h2>
 
       <input
@@ -65,6 +68,7 @@ function ResumeUpload() {
         Upload Resume
       </button>
     </div>
+    </>
   );
 }
 

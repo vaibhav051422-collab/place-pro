@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function Login() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,13 +15,22 @@ function Login() {
         password,
       });
 
+      // Save JWT Token
       localStorage.setItem("token", res.data.access_token);
-      window.location.href = "/upload";
 
       alert("Login Successful!");
+
+      // Go to Dashboard
+      navigate("/dashboard");
+
     } catch (err) {
-      alert("Login Failed");
       console.error(err);
+
+      if (err.response?.data?.detail) {
+        alert(err.response.data.detail);
+      } else {
+        alert("Login Failed");
+      }
     }
   };
 
@@ -46,7 +58,9 @@ function Login() {
       <br />
       <br />
 
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin}>
+        Login
+      </button>
     </div>
   );
 }

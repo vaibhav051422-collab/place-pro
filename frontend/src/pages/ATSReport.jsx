@@ -1,4 +1,5 @@
 import "./../styles/ATSReport.css";
+import Navbar from "../components/Navbar";
 
 function ATSReport() {
   const report = JSON.parse(localStorage.getItem("atsReport"));
@@ -27,6 +28,9 @@ function ATSReport() {
   }
 
   return (
+    <>
+    <Navbar />
+
     <div className="report-container">
 
       {/* Header */}
@@ -243,8 +247,12 @@ function ATSReport() {
   >
     Next → Job Description Matching
   </button>
-</div>
+      </div>
+
     </div>
+
+  </>
+
   );
 }
 

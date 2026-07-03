@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ResumeUpload from "./pages/ResumeUpload";
 import ATSReport from "./pages/ATSReport";
@@ -8,12 +9,19 @@ import JobMatch from "./pages/JobMatch";
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/upload" element={<ResumeUpload />} />
-        <Route path="/report" element={<ATSReport />} />
-        <Route path="/job-match" element={<JobMatch />} />
-      </Routes>
+  <Routes>
+
+  <Route path="/" element={<Login />} />
+
+  <Route path="/dashboard" element={<Dashboard />} />
+
+  <Route path="/upload" element={<ResumeUpload />} />
+
+  <Route path="/report" element={<ATSReport />} />
+
+  <Route path="/job-match" element={<JobMatch />} />
+
+</Routes>
     </BrowserRouter>
   );
 }
