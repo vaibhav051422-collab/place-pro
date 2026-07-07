@@ -1,31 +1,27 @@
-function SectionCard({ title, children }) {
+import { motion } from 'framer-motion';
+import './SectionCard.css';
 
-    return (
-
-        <div
-            style={{
-                background: "#fff",
-                padding: "25px",
-                borderRadius: "16px",
-                boxShadow: "0 8px 25px rgba(0,0,0,.08)",
-                marginTop: "30px"
-            }}
-        >
-
-            <h2
-                style={{
-                    marginBottom: "20px"
-                }}
-            >
-                {title}
-            </h2>
-
-            {children}
-
+export const SectionCard = ({ title, subtitle, children, action, delay = 0 }) => {
+  return (
+    <motion.div
+      className="section-card"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.5 }}
+    >
+      <div className="section-header">
+        <div>
+          <h3 className="section-title">{title}</h3>
+          {subtitle && <p className="section-subtitle">{subtitle}</p>}
         </div>
-
-    );
-
-}
+        {action && <div className="section-action">{action}</div>}
+      </div>
+      
+      <div className="section-content">
+        {children}
+      </div>
+    </motion.div>
+  );
+};
 
 export default SectionCard;

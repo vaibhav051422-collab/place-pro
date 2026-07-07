@@ -1,0 +1,136 @@
+.activity-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.activity-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.375rem;
+  top: 1.5rem;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.3), transparent);
+}
+
+.timeline-item {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.timeline-marker {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(139, 92, 246, 0.2);
+  color: #8B5CF6;
+  border: 2px solid #8B5CF6;
+  flex-shrink: 0;
+  position: absolute;
+  left: -2rem;
+  top: 0;
+  transition: all 0.3s ease;
+}
+
+.timeline-marker.success {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  border-color: #10B981;
+}
+
+.timeline-marker.warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  border-color: #F59E0B;
+}
+
+.timeline-marker.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #EF4444;
+  border-color: #EF4444;
+}
+
+.timeline-marker.info {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3B82F6;
+  border-color: #3B82F6;
+}
+
+.timeline-content {
+  padding: 1rem;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(203, 213, 225, 0.1);
+  border-radius: 0.5rem;
+  flex: 1;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-content {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.timeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  gap: 1rem;
+}
+
+.timeline-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #F1F5F9;
+}
+
+.timeline-time {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  white-space: nowrap;
+}
+
+.timeline-description {
+  font-size: 0.875rem;
+  color: #CBD5E1;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(139, 92, 246, 0.2);
+  color: #8B5CF6;
+}
+
+.timeline-badge.success {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+}
+
+.timeline-badge.warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+}
+
+.timeline-badge.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #EF4444;
+}
+
+.timeline-badge.info {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3B82F6;
+}
