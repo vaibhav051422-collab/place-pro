@@ -1,0 +1,12 @@
+{
+    "company": "Accenture",
+    "required_skills": [
+        "Java",
+        "Python",
+        "AWS",
+        "Azure",
+        "Git",
+        "Docker",
+        "SQL"
+    ]
+}

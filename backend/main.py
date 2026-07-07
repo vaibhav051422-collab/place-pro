@@ -2,6 +2,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 import os
 
+from app.routes.roadmap import router as roadmap_router
+from app.routes.ml import router as ml_router
+from app.routes.company_match import router as company_match_router
+from app.routes.improve import router as improve_router
 from app.routes.placement import router as placement_router
 from app.routes.auth import router as auth_router
 from app.routes.resume import router as resume_router
@@ -40,6 +44,12 @@ app.include_router(
     tags=["Resume"]
 )
 
+app.include_router(
+    improve_router,
+    prefix="/api/resume",
+    tags=["AI Resume Improvement"]
+)
+
 # Job Matching
 app.include_router(
     job_router,
@@ -48,11 +58,28 @@ app.include_router(
 )
 
 app.include_router(
+    company_match_router,
+    prefix="/api/company",
+    tags=["Company Compatibility"]
+)
+
+app.include_router(
     placement_router,
     prefix="/api/placement",
     tags=["Placement"]
 )
 
+app.include_router(
+    ml_router,
+    prefix="/api/ml",
+    tags=["Machine Learning"]
+)
+
+app.include_router(
+    roadmap_router,
+    prefix="/api/roadmap",
+    tags=["Career Roadmap"]
+)
 @app.get("/")
 def root():
     return {

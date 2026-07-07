@@ -1,0 +1,16 @@
+{
+    "company": "Amazon",
+    "required_skills": [
+        "Python",
+        "Java",
+        "AWS",
+        "SQL",
+        "REST API",
+        "Docker",
+        "Kubernetes",
+        "Git",
+        "System Design",
+        "Data Structures",
+        "Algorithms"
+    ]
+}

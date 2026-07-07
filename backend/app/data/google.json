@@ -1,0 +1,14 @@
+{
+    "company": "Google",
+    "required_skills": [
+        "Python",
+        "C++",
+        "Java",
+        "Algorithms",
+        "Data Structures",
+        "System Design",
+        "Machine Learning",
+        "SQL",
+        "Git"
+    ]
+}

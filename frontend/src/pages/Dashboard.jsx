@@ -5,48 +5,49 @@ import api from "../services/api";
 import "../styles/Dashboard.css";
 
 function Dashboard() {
-
   const navigate = useNavigate();
 
   const report = JSON.parse(localStorage.getItem("atsReport"));
 
   const atsScore = report?.ats_score?.overall || "Not Available";
 
-  const [placement, setPlacement] = useState(null);
+  const [placement, setPlacement] = useState({
+    placement_score: 0,
+    strengths: [],
+    recommendations: [],
+  });
 
   useEffect(() => {
-
     const fetchPlacement = async () => {
-
       try {
-
         const token = localStorage.getItem("token");
 
-        const res = await api.get(
-          "/api/placement/readiness",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        );
+        const res = await api.get("/api/placement/readiness", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-        setPlacement(res.data);
-
+        setPlacement({
+          placement_score: res.data.placement_score || 0,
+          strengths: res.data.strengths || [],
+          recommendations: res.data.recommendations || [],
+        });
       } catch (err) {
-
         console.error(err);
 
+        setPlacement({
+          placement_score: 0,
+          strengths: [],
+          recommendations: [],
+        });
       }
-
     };
 
     fetchPlacement();
-
   }, []);
 
   return (
-
     <>
       <Navbar />
 
@@ -55,10 +56,9 @@ function Dashboard() {
           maxWidth: "1200px",
           margin: "40px auto",
           padding: "20px",
-          fontFamily: "Arial"
+          fontFamily: "Arial",
         }}
       >
-
         <h1>Welcome Back 👋</h1>
 
         <p>Your AI Placement Dashboard</p>
@@ -68,10 +68,9 @@ function Dashboard() {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))",
             gap: "25px",
-            marginTop: "35px"
+            marginTop: "35px",
           }}
         >
-
           {/* Resume */}
 
           <div className="dashboard-card">
@@ -96,42 +95,28 @@ function Dashboard() {
             <p>Analyze Anytime</p>
           </div>
 
-          {/* Placement Readiness */}
+          {/* Placement */}
 
           <div className="dashboard-card">
-
             <h2>Placement Readiness</h2>
 
-            <h1>
-
-              {
-                placement
-                  ? `${placement.placement_score}%`
-                  : "..."
-              }
-
-            </h1>
+            <h1>{placement.placement_score}%</h1>
 
             <p>
-
-              {
-                placement
-                  ? "Interview Readiness"
-                  : "Loading..."
-              }
-
+              {placement.placement_score > 0
+                ? "Interview Readiness"
+                : "Loading..."}
             </p>
-
           </div>
-
         </div>
+
+        {/* Quick Actions */}
 
         <div
           style={{
-            marginTop: "60px"
+            marginTop: "60px",
           }}
         >
-
           <h2>Quick Actions</h2>
 
           <div
@@ -139,100 +124,65 @@ function Dashboard() {
               display: "flex",
               gap: "20px",
               flexWrap: "wrap",
-              marginTop: "20px"
+              marginTop: "20px",
             }}
           >
-
-            <button
-              onClick={() => navigate("/upload")}
-            >
+            <button onClick={() => navigate("/upload")}>
               Upload Resume
             </button>
 
-            <button
-              onClick={() => navigate("/report")}
-            >
+            <button onClick={() => navigate("/report")}>
               ATS Report
             </button>
 
-            <button
-              onClick={() => navigate("/job-match")}
-            >
-              Job Match
+            <button onClick={() => navigate("/career-match")}>
+              Career Match
             </button>
-
           </div>
-
         </div>
 
-        {
+        {/* Placement Details */}
 
-          placement && (
+        <div
+          style={{
+            marginTop: "50px",
+          }}
+        >
+          <div className="dashboard-card">
+            <h2>Strengths</h2>
 
-            <div
+            {placement.strengths.length === 0 ? (
+              <p>No strengths available.</p>
+            ) : (
+              <ul>
+                {placement.strengths.map((item, index) => (
+                  <li key={index}>✅ {item}</li>
+                ))}
+              </ul>
+            )}
+
+            <h2
               style={{
-                marginTop: "50px"
+                marginTop: "30px",
               }}
             >
+              Recommendations
+            </h2>
 
-              <div className="dashboard-card">
-
-                <h2>Strengths</h2>
-
-                <ul>
-
-                  {
-
-                    placement.strengths.map((item, index) => (
-
-                      <li key={index}>
-                        ✅ {item}
-                      </li>
-
-                    ))
-
-                  }
-
-                </ul>
-
-                <h2
-                  style={{
-                    marginTop: "30px"
-                  }}
-                >
-                  Recommendations
-                </h2>
-
-                <ul>
-
-                  {
-
-                    placement.recommendations.map((item, index) => (
-
-                      <li key={index}>
-                        💡 {item}
-                      </li>
-
-                    ))
-
-                  }
-
-                </ul>
-
-              </div>
-
-            </div>
-
-          )
-
-        }
-
+            {placement.recommendations.length === 0 ? (
+              <p>No recommendations available.</p>
+            ) : (
+              <ul>
+                {placement.recommendations.map((item, index) => (
+                  <li key={index}>💡 {item}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
       </div>
-
     </>
-
   );
-
 }
 
 export default Dashboard;

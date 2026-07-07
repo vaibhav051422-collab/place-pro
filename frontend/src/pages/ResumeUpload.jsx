@@ -1,75 +1,249 @@
 import { useState } from "react";
-import api from "../services/api";
+import { useNavigate } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
+import api from "../services/api";
+
+import "../styles/ResumeUpload.css";
 
 function ResumeUpload() {
-  const [file, setFile] = useState(null);
 
-  const uploadResume = async () => {
-    if (!file) {
-      alert("Please select a PDF");
-      return;
-    }
+    const navigate = useNavigate();
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const [file, setFile] = useState(null);
 
-    try {
-      const token = localStorage.getItem("token");
+    const [loading, setLoading] = useState(false);
 
-      console.log("Sending Token:", token);
+    const [progress, setProgress] = useState(0);
 
-      const res = await api.post(
-        "/api/resume/upload",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    const uploadResume = async () => {
+
+        if (!file) {
+
+            alert("Please select a PDF.");
+
+            return;
+
         }
-      );
 
-      console.log("Success:", res.data);
+        try {
 
-      // Save complete ATS report
-      localStorage.setItem(
-        "atsReport",
-        JSON.stringify(res.data)
-      );
+            setLoading(true);
 
-      // Redirect to ATS Report page
-      window.location.href = "/report";
+            setProgress(10);
 
-    } catch (err) {
-      console.log("Status:", err.response?.status);
-      console.log("Response:", err.response?.data);
-      console.error(err);
+            const formData = new FormData();
 
-      alert("Upload Failed");
-    }
-  };
+            formData.append("file", file);
 
-  return (
+            const token = localStorage.getItem("token");
+
+            const timer = setInterval(() => {
+
+                setProgress((old) => {
+
+                    if (old >= 90) return old;
+
+                    return old + 10;
+
+                });
+
+            }, 400);
+
+            const res = await api.post(
+
+                "/api/resume/upload",
+
+                formData,
+
+                {
+
+                    headers: {
+
+                        Authorization: `Bearer ${token}`
+
+                    }
+
+                }
+
+            );
+
+            clearInterval(timer);
+
+            setProgress(100);
+
+            localStorage.setItem(
+
+                "dashboardData",
+
+                JSON.stringify(res.data)
+
+            );
+
+            setTimeout(() => {
+
+                navigate("/dashboard");
+
+            }, 1000);
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+            alert("Upload Failed");
+
+            setLoading(false);
+
+        }
+
+    };
+
+    return (
+
         <>
-        <Navbar />
-     <div style={{ padding: "40px" }}>
-      <h2>Upload Resume</h2>
 
-      <input
-        type="file"
-        accept=".pdf"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
+            <Navbar />
 
-      <br />
-      <br />
+            <div className="page">
 
-      <button onClick={uploadResume}>
-        Upload Resume
-      </button>
-    </div>
-    </>
-  );
+                <div className="upload-container">
+
+                    <h1 className="upload-title">
+
+                        Upload Resume
+
+                    </h1>
+
+                    <p className="upload-subtitle">
+
+                        Upload your latest resume and let AI analyze it.
+
+                    </p>
+
+                    <label className="upload-box">
+
+                        <input
+
+                            type="file"
+
+                            accept=".pdf"
+
+                            hidden
+
+                            onChange={(e) =>
+
+                                setFile(e.target.files[0])
+
+                            }
+
+                        />
+
+                        <h2>
+
+                            📄 Click to Select Resume
+
+                        </h2>
+
+                        <p>
+
+                            PDF Only
+
+                        </p>
+
+                    </label>
+
+                    {
+
+                        file &&
+
+                        <div className="file-name">
+
+                            Selected:
+
+                            {" "}
+
+                            {file.name}
+
+                        </div>
+
+                    }
+
+                    {
+
+                        loading &&
+
+                        <>
+
+                            <div className="progress">
+
+                                <div
+
+                                    className="progress-fill"
+
+                                    style={{
+
+                                        width: `${progress}%`
+
+                                    }}
+
+                                />
+
+                            </div>
+
+                            <p>
+
+                                {progress < 30 && "Uploading Resume..."}
+
+                                {progress >= 30 && progress < 60 && "Parsing Resume..."}
+
+                                {progress >= 60 && progress < 80 && "Running ML Model..."}
+
+                                {progress >= 80 && progress < 100 && "Generating AI Analysis..."}
+
+                                {progress === 100 && "Completed ✅"}
+
+                            </p>
+
+                        </>
+
+                    }
+
+                    <button
+
+                        className="upload-btn"
+
+                        disabled={loading}
+
+                        onClick={uploadResume}
+
+                    >
+
+                        {
+
+                            loading
+
+                                ?
+
+                                "Processing..."
+
+                                :
+
+                                "Upload Resume"
+
+                        }
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </>
+
+    );
+
 }
 
 export default ResumeUpload;

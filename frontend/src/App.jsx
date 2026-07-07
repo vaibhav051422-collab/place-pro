@@ -1,5 +1,7 @@
+import Register from "./pages/Register";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import CareerMatch from "./pages/CareerMatch";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ResumeUpload from "./pages/ResumeUpload";
@@ -11,8 +13,9 @@ function App() {
     <BrowserRouter>
   <Routes>
 
+  <Route path="/career-match" element={<CareerMatch />} />
   <Route path="/" element={<Login />} />
-
+  <Route path="/register" element={<Register />} />
   <Route path="/dashboard" element={<Dashboard />} />
 
   <Route path="/upload" element={<ResumeUpload />} />

@@ -8,31 +8,37 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      const res = await api.post("/api/auth/login", {
-        email,
-        password,
-      });
+const handleLogin = async () => {
+  try {
+    const formData = new URLSearchParams();
 
-      // Save JWT Token
-      localStorage.setItem("token", res.data.access_token);
+    formData.append("username", email);
+    formData.append("password", password);
 
-      alert("Login Successful!");
-
-      // Go to Dashboard
-      navigate("/dashboard");
-
-    } catch (err) {
-      console.error(err);
-
-      if (err.response?.data?.detail) {
-        alert(err.response.data.detail);
-      } else {
-        alert("Login Failed");
+    const res = await api.post(
+      "/api/auth/login",
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       }
-    }
-  };
+    );
+
+    localStorage.setItem("token", res.data.access_token);
+
+    alert("Login Successful!");
+
+    navigate("/dashboard");
+
+  } catch (err) {
+    console.error(err);
+
+    alert(
+      err.response?.data?.detail || "Login Failed"
+    );
+  }
+};
 
   return (
     <div style={{ padding: "40px" }}>
@@ -59,8 +65,15 @@ function Login() {
       <br />
 
       <button onClick={handleLogin}>
-        Login
-      </button>
+  Login
+</button>
+
+<br />
+<br />
+
+<button onClick={() => navigate("/register")}>
+  Create New Account
+</button>
     </div>
   );
 }
