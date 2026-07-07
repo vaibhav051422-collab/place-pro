@@ -21,7 +21,10 @@ function App() {
   <Route path="/upload" element={<ResumeUpload />} />
 
   <Route path="/report" element={<ATSReport />} />
-
+  <Route path="/" element={<Login />} />
+<Route path="/register" element={<Register />} />
+<Route path="/dashboard" element={<Dashboard />} />
+<Route path="/upload" element={<ResumeUpload />} />
   <Route path="/job-match" element={<JobMatch />} />
 
 </Routes>

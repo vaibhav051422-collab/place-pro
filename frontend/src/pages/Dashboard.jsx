@@ -1,188 +1,244 @@
 import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import api from "../services/api";
+import StatCard from "../components/StatCard";
+import SectionCard from "../components/SectionCard";
+import CompanyTable from "../components/CompanyTable";
+import RoadmapCard from "../components/RoadmapCard";
+import SkillList from "../components/SkillList";
+
 import "../styles/Dashboard.css";
 
+import { useNavigate } from "react-router-dom";
+
 function Dashboard() {
-  const navigate = useNavigate();
 
-  const report = JSON.parse(localStorage.getItem("atsReport"));
+    const navigate = useNavigate();
 
-  const atsScore = report?.ats_score?.overall || "Not Available";
+    const dashboardData = JSON.parse(
+        localStorage.getItem("dashboardData")
+    );
 
-  const [placement, setPlacement] = useState({
-    placement_score: 0,
-    strengths: [],
-    recommendations: [],
-  });
+    if (!dashboardData) {
 
-  useEffect(() => {
-    const fetchPlacement = async () => {
-      try {
-        const token = localStorage.getItem("token");
+        return (
 
-        const res = await api.get("/api/placement/readiness", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+            <>
+                <Navbar />
 
-        setPlacement({
-          placement_score: res.data.placement_score || 0,
-          strengths: res.data.strengths || [],
-          recommendations: res.data.recommendations || [],
-        });
-      } catch (err) {
-        console.error(err);
+                <div className="dashboard">
 
-        setPlacement({
-          placement_score: 0,
-          strengths: [],
-          recommendations: [],
-        });
-      }
-    };
+                    <h1>No Resume Analysis Found</h1>
 
-    fetchPlacement();
-  }, []);
+                    <p>Please upload your resume first.</p>
 
-  return (
-    <>
-      <Navbar />
+                    <button
+                        className="action-btn"
+                        onClick={() => navigate("/upload")}
+                    >
+                        Upload Resume
+                    </button>
 
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "40px auto",
-          padding: "20px",
-          fontFamily: "Arial",
-        }}
-      >
-        <h1>Welcome Back 👋</h1>
+                </div>
 
-        <p>Your AI Placement Dashboard</p>
+            </>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))",
-            gap: "25px",
-            marginTop: "35px",
-          }}
-        >
-          {/* Resume */}
+        );
 
-          <div className="dashboard-card">
-            <h2>Resume</h2>
-            <h1>📄</h1>
-            <p>Uploaded</p>
-          </div>
+    }
 
-          {/* ATS */}
+    const {
+        parsed_resume,
+        ats_score,
+        placement,
+        company_matches,
+        resume_analysis,
+        career_roadmap
+    } = dashboardData;
 
-          <div className="dashboard-card">
-            <h2>ATS Score</h2>
-            <h1>{atsScore}</h1>
-            <p>/100</p>
-          </div>
+    const bestCompany =
+        company_matches.length > 0
+            ? company_matches[0]
+            : null;
 
-          {/* Job Match */}
+    return (
 
-          <div className="dashboard-card">
-            <h2>Job Match</h2>
-            <h1>💼</h1>
-            <p>Analyze Anytime</p>
-          </div>
+        <>
 
-          {/* Placement */}
+            <Navbar />
 
-          <div className="dashboard-card">
-            <h2>Placement Readiness</h2>
+            <div className="dashboard">
 
-            <h1>{placement.placement_score}%</h1>
+                <h1 className="dashboard-title">
+                    Welcome Back 👋
+                </h1>
 
-            <p>
-              {placement.placement_score > 0
-                ? "Interview Readiness"
-                : "Loading..."}
-            </p>
-          </div>
-        </div>
+                <p className="dashboard-sub">
+                    AI Powered Placement Dashboard
+                </p>
 
-        {/* Quick Actions */}
+                <div className="grid">
 
-        <div
-          style={{
-            marginTop: "60px",
-          }}
-        >
-          <h2>Quick Actions</h2>
+                    <StatCard
+                        emoji="📄"
+                        title="Resume"
+                        value="Uploaded"
+                        subtitle={parsed_resume.name}
+                    />
 
-          <div
-            style={{
-              display: "flex",
-              gap: "20px",
-              flexWrap: "wrap",
-              marginTop: "20px",
-            }}
-          >
-            <button onClick={() => navigate("/upload")}>
-              Upload Resume
-            </button>
+                    <StatCard
+                        emoji="📊"
+                        title="Rule ATS"
+                        value={ats_score.rule_based.overall}
+                        subtitle="/100"
+                    />
 
-            <button onClick={() => navigate("/report")}>
-              ATS Report
-            </button>
+                    <StatCard
+                        emoji="🤖"
+                        title="ML ATS"
+                        value={ats_score.ml_score}
+                        subtitle="/100"
+                    />
 
-            <button onClick={() => navigate("/career-match")}>
-              Career Match
-            </button>
-          </div>
-        </div>
+                    <StatCard
+                        emoji="🎯"
+                        title="Placement"
+                        value={`${placement.placement_score}%`}
+                        subtitle="Readiness"
+                    />
 
-        {/* Placement Details */}
+                </div>
 
-        <div
-          style={{
-            marginTop: "50px",
-          }}
-        >
-          <div className="dashboard-card">
-            <h2>Strengths</h2>
+                {bestCompany && (
 
-            {placement.strengths.length === 0 ? (
-              <p>No strengths available.</p>
-            ) : (
-              <ul>
-                {placement.strengths.map((item, index) => (
-                  <li key={index}>✅ {item}</li>
-                ))}
-              </ul>
-            )}
+                    <SectionCard title="🏆 Best Company Match">
 
-            <h2
-              style={{
-                marginTop: "30px",
-              }}
-            >
-              Recommendations
-            </h2>
+                        <h2>
 
-            {placement.recommendations.length === 0 ? (
-              <p>No recommendations available.</p>
-            ) : (
-              <ul>
-                {placement.recommendations.map((item, index) => (
-                  <li key={index}>💡 {item}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      </div>
-    </>
-  );
+                            {bestCompany.company}
+
+                        </h2>
+
+                        <h1>
+
+                            {bestCompany.compatibility_score}%
+
+                        </h1>
+
+                        <p>
+
+                            {bestCompany.compatibility_level}
+
+                        </p>
+
+                    </SectionCard>
+
+                )}
+
+                <SectionCard title="🧠 AI Resume Summary">
+
+                    <p className="summary">
+
+                        {resume_analysis.suggested_summary}
+
+                    </p>
+
+                </SectionCard>
+
+                <div className="grid">
+
+                    <SkillList
+
+                        title="💪 Strengths"
+
+                        skills={resume_analysis.strengths}
+
+                        color="green"
+
+                    />
+
+                    <SkillList
+
+                        title="⚠ Weaknesses"
+
+                        skills={resume_analysis.weaknesses}
+
+                        color="red"
+
+                    />
+
+                </div>
+
+                <SectionCard title="🚀 Recommended Skills">
+
+                    {
+
+                        resume_analysis.recommended_skills.map(
+
+                            (skill, index) => (
+
+                                <span
+                                    key={index}
+                                    className="skill"
+                                >
+                                    {skill}
+                                </span>
+
+                            )
+
+                        )
+
+                    }
+
+                </SectionCard>
+
+                <CompanyTable
+                    companies={company_matches}
+                />
+
+                <RoadmapCard
+                    roadmap={career_roadmap}
+                />
+
+                <SectionCard title="⚡ Quick Actions">
+
+                    <div className="actions">
+
+                        <button
+                            className="action-btn"
+                            onClick={() => navigate("/upload")}
+                        >
+                            Upload Resume
+                        </button>
+
+                        <button
+                            className="action-btn"
+                            onClick={() => window.print()}
+                        >
+                            Download Report
+                        </button>
+
+                        <button
+                            className="action-btn"
+                            onClick={() => {
+
+                                localStorage.clear();
+
+                                navigate("/");
+
+                            }}
+                        >
+                            Logout
+                        </button>
+
+                    </div>
+
+                </SectionCard>
+
+            </div>
+
+        </>
+
+    );
+
 }
 
 export default Dashboard;
