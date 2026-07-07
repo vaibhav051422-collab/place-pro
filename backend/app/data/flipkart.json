@@ -1,0 +1,13 @@
+{
+    "company": "Flipkart",
+    "required_skills": [
+        "Java",
+        "Spring Boot",
+        "SQL",
+        "Docker",
+        "Redis",
+        "Kafka",
+        "Git",
+        "AWS"
+    ]
+}

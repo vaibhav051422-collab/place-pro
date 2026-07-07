@@ -1,0 +1,13 @@
+{
+    "company": "Microsoft",
+    "required_skills": [
+        "C#",
+        ".NET",
+        "Azure",
+        "React",
+        "SQL",
+        "Git",
+        "REST API",
+        "System Design"
+    ]
+}

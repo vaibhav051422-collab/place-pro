@@ -1,11 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Upload, File, CheckCircle, AlertCircle } from 'lucide-react';
+
 import Navbar from '../components/Navbar';
 import { Button, SectionCard } from '../components';
+import api from '../services/api';
+
 import './ResumeAnalysis.css';
 
 export const ResumeAnalysis = () => {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -30,22 +35,39 @@ export const ResumeAnalysis = () => {
       const formData = new FormData();
       formData.append('file', file);
       
-      // TODO: Replace with actual API endpoint
-      // const response = await fetch('/api/resume/analyze', {
-      //   method: 'POST',
-      //   body: formData,
-      // });
-      
-      // Simulated response
-      setResult({
-        score: 8.2,
-        strengths: ['Clear formatting', 'Good experience', 'Relevant skills'],
-        weaknesses: ['Missing certifications', 'No projects listed'],
-        recommendations: ['Add recent projects', 'Include certifications', 'Update technologies'],
-      });
+
+        const token = localStorage.getItem("token");
+
+const response = await api.post(
+  "/api/resume/upload",
+  formData,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  }
+);
+
+setResult(response.data);
+
+localStorage.setItem(
+  "dashboardData",
+  JSON.stringify(response.data)
+);
+
+setTimeout(() => {
+  navigate("/dashboard");
+}, 1000);
     } catch (err) {
-      setError('Failed to analyze resume');
-    } finally {
+  console.error(err);
+
+  setError(
+    err.response?.data?.detail ||
+    err.message ||
+    "Failed to analyze resume"
+  );
+} finally {
       setLoading(false);
     }
   };
