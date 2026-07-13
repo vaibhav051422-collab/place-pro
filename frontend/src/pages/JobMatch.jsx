@@ -130,28 +130,28 @@ function JobMatch() {
 
           <div className="job-card">
 
-            <h2>Missing Skills</h2>
+<h2>Missing Skills</h2>
 
-            <div className="skill-list">
+<div className="skill-list">
 
-              {result.missing_skills.length > 0 ? (
+  {result.missing_skills.length > 0 ? (
+    result.missing_skills.map((skill, index) => (
+      <div
+        key={index}
+        className="bad"
+      >
+        ❌ {skill}
+      </div>
+    ))
+  ) : (
+    <p>
+      {result.match_score === 100
+        ? "🎉 No missing skills. Excellent!"
+        : "Resume needs more matching skills."}
+    </p>
+  )}
 
-                result.missing_skills.map((skill, index) => (
-                  <div
-                    key={index}
-                    className="bad"
-                  >
-                    ❌ {skill}
-                  </div>
-                ))
-
-              ) : (
-
-                <p>No missing skills. Excellent!</p>
-
-              )}
-
-            </div>
+</div>
 
           </div>
 
@@ -159,21 +159,26 @@ function JobMatch() {
 
             <h2>AI Recommendations</h2>
 
-            {result.missing_skills.length > 0 ? (
+{result.match_score === 100 ? (
+  <p>🎉 Your resume matches this Job Description perfectly.</p>
+) : (
+  result.missing_skills.map((skill, index) => (
+    <p key={index}>
+      • Learn <b>{skill}</b> and include it in your projects or resume.
+    </p>
+  ))
+)}
+             : (
 
-              result.missing_skills.map((skill, index) => (
-                <p key={index}>
-                  • Learn <b>{skill}</b> and include it in your projects or resume.
-                </p>
-              ))
+              {result.match_score === 100 ? (
+    <p>🎉 Your resume matches this Job Description perfectly.</p>
+) : (
+    <p>
+        Improve the missing skills above to increase your match score.
+    </p>
+)}
 
-            ) : (
-
-              <p>
-                🎉 Your resume matches this Job Description very well.
-              </p>
-
-            )}
+            )
 
           </div>
 

@@ -1,11 +1,10 @@
 import re
 
-
 SKILLS = [
     "Python",
     "Java",
-    "C",
     "C++",
+    "C",
     "JavaScript",
     "TypeScript",
     "React",
@@ -21,35 +20,47 @@ SKILLS = [
     "GitHub",
     "REST API",
     "HTML",
-    "CSS"
+    "CSS",
+    "Linux",
+    "Spring Boot",
+    "System Design",
+    "Data Structures",
+    "Algorithms",
+    "Machine Learning",
+    "Azure",
+    ".NET"
 ]
 
 
 def extract_job_skills(description: str):
+    description = description.lower()
+
     found = []
 
     for skill in SKILLS:
-        if re.search(rf"\b{re.escape(skill)}\b", description, re.IGNORECASE):
+        if skill.lower() in description:
             found.append(skill)
 
-    return found
+    return list(set(found))
 
 
 def calculate_job_match(resume_skills, job_skills):
 
-    matched = []
+    resume = {s.lower() for s in resume_skills}
+    job = {s.lower() for s in job_skills}
 
+    matched = []
     missing = []
 
     for skill in job_skills:
-        if skill in resume_skills:
+        if skill.lower() in resume:
             matched.append(skill)
         else:
             missing.append(skill)
 
-    if len(job_skills) == 0:
-        score = 0
-    else:
+    score = 0
+
+    if len(job_skills) > 0:
         score = round((len(matched) / len(job_skills)) * 100)
 
     return {

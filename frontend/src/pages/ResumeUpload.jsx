@@ -70,15 +70,15 @@ function ResumeUpload() {
 
             clearInterval(timer);
 
-            setProgress(100);
-
             localStorage.setItem(
+    "dashboardData",
+    JSON.stringify(res.data)
+);
 
-                "dashboardData",
-
-                JSON.stringify(res.data)
-
-            );
+localStorage.setItem(
+    "atsReport",
+    JSON.stringify(res.data)
+);
 
             setTimeout(() => {
 

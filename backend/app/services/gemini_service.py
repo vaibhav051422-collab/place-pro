@@ -1,6 +1,7 @@
 import os
 import json
 import re
+import traceback
 
 from dotenv import load_dotenv
 from google import genai
@@ -10,7 +11,6 @@ load_dotenv()
 client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
 )
-
 
 # =====================================================
 # Resume Improvement
@@ -43,8 +43,11 @@ Resume:
             contents=prompt
         )
 
-        text = response.text.strip()
+        print("\n========== GEMINI RESUME RESPONSE ==========")
+        print(response.text)
+        print("============================================\n")
 
+        text = response.text.strip()
         text = text.replace("```json", "")
         text = text.replace("```", "")
 
@@ -55,9 +58,11 @@ Resume:
 
         return json.loads(text)
 
-    except Exception as e:
+    except Exception:
 
-        print(e)
+        print("\n========== GEMINI RESUME ERROR ==========")
+        traceback.print_exc()
+        print("=========================================\n")
 
         return {
             "strengths": [],
@@ -107,6 +112,8 @@ Maximum 120 words.
         return response.text.strip()
 
     except Exception:
+
+        traceback.print_exc()
 
         return (
             "Your profile has good potential. Focus on the missing skills "
@@ -160,8 +167,11 @@ Format:
             contents=prompt
         )
 
-        text = response.text.strip()
+        print("\n========== GEMINI ROADMAP RESPONSE ==========")
+        print(response.text)
+        print("=============================================\n")
 
+        text = response.text.strip()
         text = text.replace("```json", "")
         text = text.replace("```", "")
 
@@ -172,9 +182,11 @@ Format:
 
         return json.loads(text)
 
-    except Exception as e:
+    except Exception:
 
-        print(e)
+        print("\n========== GEMINI ROADMAP ERROR ==========")
+        traceback.print_exc()
+        print("==========================================\n")
 
         return {
             "summary": "Unable to generate roadmap.",

@@ -69,14 +69,14 @@ def upload_resume(
         ml_score = predict_resume(parsed_resume)
     except Exception as e:
         print("ML Prediction Error:", e)
-        ml_score = ats_score["rule_based"]["overall"]
+        ml_score = ats_score["overall"]
 
     ats_score["ml_score"] = ml_score
 
     # Placement Readiness
     placement = calculate_placement_readiness(
         parsed_resume,
-        ats_score["rule_based"]
+        ats_score
     )
 
     # Company Matching
@@ -90,23 +90,26 @@ def upload_resume(
     )
 
     # Career Roadmap
-    top_company = company_matches[0]
+    if len(company_matches) > 0:
+        top_company = company_matches[0]
 
-    roadmap_input = type(
-        "RoadmapData",
-        (),
-        {
-            "target_company": top_company["company"],
-            "ats_score": ml_score,
-            "placement_probability": placement["placement_score"],
-            "matched_skills": top_company["matched_skills"],
-            "missing_skills": top_company["missing_skills"]
-        }
-    )
+        roadmap_input = type(
+            "RoadmapData",
+            (),
+            {
+                "target_company": top_company["company"],
+                "ats_score": ml_score,
+                "placement_probability": placement["placement_score"],
+                "matched_skills": top_company["matched_skills"],
+                "missing_skills": top_company["missing_skills"]
+            }
+        )
 
-    career_roadmap = generate_career_roadmap(
-        roadmap_input
-    )
+        career_roadmap = generate_career_roadmap(
+            roadmap_input
+        )
+    else:
+        career_roadmap = "No roadmap could be generated."
 
     # Save Resume
     resume = Resume(
