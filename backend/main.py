@@ -2,6 +2,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 import os
 
+from create_tables import init_db
 from app.routes.roadmap import router as roadmap_router
 from app.routes.ml import router as ml_router
 from app.routes.company_match import router as company_match_router
@@ -18,6 +19,11 @@ app = FastAPI(
     title="PlacePro AI API",
     version="1.0.0"
 )
+
+
+@app.on_event("startup")
+def create_tables_on_startup():
+    init_db()
 
 app.add_middleware(
     CORSMiddleware,
