@@ -7,28 +7,17 @@ function StatCard({
 
   return (
 
-    <div
-      style={{
-        background: "#fff",
-        padding: "25px",
-        borderRadius: "15px",
-        boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
-        textAlign: "center",
-        flex: 1
-      }}
-    >
+    <div className="glass-panel stat-card">
 
-      <h3>{emoji} {title}</h3>
+      <div className="stat-kicker">{emoji}</div>
 
-      <h1
-        style={{
-          color: "#2563EB"
-        }}
-      >
+      <h3 className="panel-title stat-title">{title}</h3>
+
+      <h1 className="stat-value">
         {value}
       </h1>
 
-      <p>{subtitle}</p>
+      <p className="panel-subtitle stat-subtitle">{subtitle}</p>
 
     </div>
 

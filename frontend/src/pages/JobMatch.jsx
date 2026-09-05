@@ -52,140 +52,116 @@ function JobMatch() {
   }
 
   return (
-    <div className="job-container">
+    <div className="job-page page-shell">
+      <div className="job-grid-bg" />
 
-      <div className="job-card">
+      <div className="job-container">
 
-        <h1>Job Description Matching</h1>
+        <div className="job-card glass-panel">
 
-        <p>
-          Paste any company's Job Description below and
-          PlacePro AI will compare it with your resume.
-        </p>
+          <h1 className="career-title">Job Description Matching</h1>
 
-        <textarea
-          rows="12"
-          placeholder="Paste Job Description Here..."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+          <p>
+            Paste any company's Job Description below and PlacePro AI will compare it with your resume.
+          </p>
 
-        <br /><br />
+          <textarea
+            className="job-textarea"
+            rows="12"
+            placeholder="Paste Job Description Here..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
 
-        <button onClick={analyzeJob}>
-          Analyze Match
-        </button>
+          <button className="job-action" onClick={analyzeJob}>
+            Analyze Match
+          </button>
 
-      </div>
+        </div>
 
-      {result && (
+        {result && (
 
-        <>
-          <div className="job-card">
+          <>
+            <div className="job-card glass-panel">
 
-            <div
-              className="score-title"
-              style={{ color: scoreColor }}
-            >
-              {result.match_score}%
+              <div className="score-title" style={{ color: scoreColor }}>
+                {result.match_score}%
+              </div>
+
+              <h2 style={{ textAlign: "center", color: scoreColor }}>
+                {scoreLabel}
+              </h2>
+
             </div>
 
-            <h2
-              style={{
-                textAlign: "center",
-                color: scoreColor
-              }}
-            >
-              {scoreLabel}
-            </h2>
+            <div className="job-card glass-panel">
 
-          </div>
+              <h2 className="section-title">Matched Skills</h2>
 
-          <div className="job-card">
+              <div className="skill-list">
 
-            <h2>Matched Skills</h2>
+                {result.matched_skills.length > 0 ? (
+                  result.matched_skills.map((skill, index) => (
+                    <div key={index} className="good">
+                      ✅ {skill}
+                    </div>
+                  ))
+                ) : (
+                  <p>No matching skills found.</p>
+                )}
 
-            <div className="skill-list">
+              </div>
 
-              {result.matched_skills.length > 0 ? (
+            </div>
 
-                result.matched_skills.map((skill, index) => (
-                  <div
-                    key={index}
-                    className="good"
-                  >
-                    ✅ {skill}
-                  </div>
-                ))
+            <div className="job-card glass-panel">
 
+              <h2 className="section-title">Missing Skills</h2>
+
+              <div className="skill-list">
+
+                {result.missing_skills.length > 0 ? (
+                  result.missing_skills.map((skill, index) => (
+                    <div key={index} className="bad">
+                      ❌ {skill}
+                    </div>
+                  ))
+                ) : (
+                  <p>
+                    {result.match_score === 100
+                      ? "🎉 No missing skills. Excellent!"
+                      : "Resume needs more matching skills."}
+                  </p>
+                )}
+
+              </div>
+
+            </div>
+
+            <div className="job-card glass-panel">
+
+              <h2 className="section-title">AI Recommendations</h2>
+
+              {result.match_score === 100 ? (
+                <p>🎉 Your resume matches this Job Description perfectly.</p>
               ) : (
-
-                <p>No matching skills found.</p>
-
+                <>
+                  {result.missing_skills.map((skill, index) => (
+                    <p key={index}>
+                      • Learn <b>{skill}</b> and include it in your projects or resume.
+                    </p>
+                  ))}
+                  <p>Improve the missing skills above to increase your match score.</p>
+                </>
               )}
 
             </div>
 
-          </div>
+          </>
 
-          <div className="job-card">
+        )}
 
-<h2>Missing Skills</h2>
-
-<div className="skill-list">
-
-  {result.missing_skills.length > 0 ? (
-    result.missing_skills.map((skill, index) => (
-      <div
-        key={index}
-        className="bad"
-      >
-        ❌ {skill}
       </div>
-    ))
-  ) : (
-    <p>
-      {result.match_score === 100
-        ? "🎉 No missing skills. Excellent!"
-        : "Resume needs more matching skills."}
-    </p>
-  )}
-
-</div>
-
-          </div>
-
-          <div className="job-card">
-
-            <h2>AI Recommendations</h2>
-
-{result.match_score === 100 ? (
-  <p>🎉 Your resume matches this Job Description perfectly.</p>
-) : (
-  result.missing_skills.map((skill, index) => (
-    <p key={index}>
-      • Learn <b>{skill}</b> and include it in your projects or resume.
-    </p>
-  ))
-)}
-             : (
-
-              {result.match_score === 100 ? (
-    <p>🎉 Your resume matches this Job Description perfectly.</p>
-) : (
-    <p>
-        Improve the missing skills above to increase your match score.
-    </p>
-)}
-
-            )
-
-          </div>
-
-        </>
-
-      )}
-
     </div>
   );
 }

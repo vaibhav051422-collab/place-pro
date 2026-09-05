@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import os
 import joblib
 import pandas as pd
@@ -5,10 +7,15 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MultiLabelBinarizer
 
+from ml.dataset_loader import load_dataset
+
+
+MODELS_DIR = Path(__file__).resolve().parent / "models"
+
 
 def load_and_preprocess(save_encoders=True):
 
-    df = pd.read_csv("datasets/AI_Resume_Screening.csv")
+    df = load_dataset()
 
     # Fill missing values
     df["Certifications"] = df["Certifications"].fillna("None")
@@ -47,13 +54,13 @@ def load_and_preprocess(save_encoders=True):
 
     if save_encoders:
 
-        os.makedirs("ml/models", exist_ok=True)
+        os.makedirs(MODELS_DIR, exist_ok=True)
 
-        joblib.dump(education_encoder, "ml/models/education_encoder.pkl")
-        joblib.dump(role_encoder, "ml/models/role_encoder.pkl")
-        joblib.dump(cert_encoder, "ml/models/certification_encoder.pkl")
-        joblib.dump(decision_encoder, "ml/models/decision_encoder.pkl")
-        joblib.dump(mlb, "ml/models/skill_binarizer.pkl")
+        joblib.dump(education_encoder, MODELS_DIR / "education_encoder.pkl")
+        joblib.dump(role_encoder, MODELS_DIR / "role_encoder.pkl")
+        joblib.dump(cert_encoder, MODELS_DIR / "certification_encoder.pkl")
+        joblib.dump(decision_encoder, MODELS_DIR / "decision_encoder.pkl")
+        joblib.dump(mlb, MODELS_DIR / "skill_binarizer.pkl")
 
     # -------- Merge --------
 

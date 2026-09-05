@@ -24,11 +24,13 @@ function Dashboard() {
             <>
                 <Navbar />
 
-                <div className="dashboard">
+                <div className="dashboard-shell dashboard">
 
-                    <h1>No Resume Analysis Found</h1>
+                    <div className="dashboard-grid-bg" />
 
-                    <p>Please upload your resume first.</p>
+                    <h1 className="dashboard-title">No Resume Analysis Found</h1>
+
+                    <p className="dashboard-sub">Please upload your resume first.</p>
 
                     <button
                         className="action-btn"
@@ -65,7 +67,9 @@ function Dashboard() {
 
             <Navbar />
 
-            <div className="dashboard">
+            <div className="dashboard-shell dashboard">
+
+                <div className="dashboard-grid-bg" />
 
                 <h1 className="dashboard-title">
                     Welcome Back 👋

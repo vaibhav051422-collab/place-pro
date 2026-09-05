@@ -86,7 +86,8 @@ def upload_resume(
 
     # Gemini Resume Analysis
     resume_analysis = improve_resume(
-        extracted_text
+        extracted_text,
+        parsed_resume
     )
 
     # Career Roadmap
@@ -109,7 +110,21 @@ def upload_resume(
             roadmap_input
         )
     else:
-        career_roadmap = "No roadmap could be generated."
+        roadmap_input = type(
+            "RoadmapData",
+            (),
+            {
+                "target_company": "Placement Ready",
+                "ats_score": ml_score,
+                "placement_probability": placement["placement_score"],
+                "matched_skills": parsed_resume.get("skills", []),
+                "missing_skills": resume_analysis.get("weaknesses", [])
+            }
+        )
+
+        career_roadmap = generate_career_roadmap(
+            roadmap_input
+        )
 
     # Save Resume
     resume = Resume(

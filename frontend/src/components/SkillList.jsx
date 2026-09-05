@@ -8,20 +8,18 @@ function SkillList({
 
 }) {
 
+    const emptyMessage =
+        title.toLowerCase().includes("weak")
+            ? "No weaknesses identified"
+            : "No items found";
+
     return (
 
-        <div
-            style={{
-                background: "white",
-                padding: "25px",
-                borderRadius: "15px",
-                boxShadow: "0 4px 15px rgba(0,0,0,.08)"
-            }}
-        >
+        <div className="glass-panel section-card skill-card">
 
-            <h2>{title}</h2>
+            <h2 className="section-title">{title}</h2>
 
-            <ul>
+            <ul className="skill-list">
 
                 {
 
@@ -29,18 +27,13 @@ function SkillList({
 
                         ?
 
-                        <li>No Data</li>
+                        <li>{emptyMessage}</li>
 
                         :
 
                         skills.map((skill, index) => (
 
-                            <li
-                                key={index}
-                                style={{
-                                    color
-                                }}
-                            >
+                            <li key={index} className={`skill-item ${color}`}>
 
                                 {skill}
 

@@ -49,13 +49,18 @@ function CareerMatch() {
         <>
         <Navbar/>
 
-        <div style={{padding:"40px"}}>
+        <div className="career-page page-shell">
 
-        <h1>Career Match Analyzer</h1>
+        <div className="career-grid-bg" />
 
-        <br/>
+        <div className="glass-panel section-card career-card">
+
+        <h1 className="career-title">Career Match Analyzer</h1>
+
+        <p className="career-subtitle">Compare your resume skills against company requirements.</p>
 
         <select
+        className="career-select"
         value={company}
         onChange={(e)=>setCompany(e.target.value)}
         >
@@ -76,10 +81,7 @@ function CareerMatch() {
 
         </select>
 
-        <button
-        onClick={analyze}
-        style={{marginLeft:"20px"}}
-        >
+        <button className="analyse-btn" onClick={analyze}>
 
         Analyze
 
@@ -88,11 +90,7 @@ function CareerMatch() {
         {
             result && (
 
-                <div
-                style={{
-                    marginTop:"40px"
-                }}
-                >
+                <div className="section-card glass-panel" style={{ marginTop: "28px" }}>
 
                     <h2>
 
@@ -126,7 +124,7 @@ function CareerMatch() {
 
                     </h3>
 
-                    <ul>
+                    <ul className="skill-list">
 
                         {
 
@@ -150,7 +148,7 @@ function CareerMatch() {
 
                     </h3>
 
-                    <ul>
+                    <ul className="skill-list">
 
                         {
 
@@ -173,6 +171,7 @@ function CareerMatch() {
             )
         }
 
+        </div>
         </div>
 
         </>

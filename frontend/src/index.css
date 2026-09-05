@@ -1,111 +1,557 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  color-scheme: dark;
+  --bg: #05060a;
+  --bg-elevated: rgba(255, 255, 255, 0.04);
+  --bg-soft: rgba(255, 255, 255, 0.02);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(123, 110, 246, 0.32);
+  --text: #e8e6f0;
+  --text-soft: rgba(232, 230, 240, 0.65);
+  --text-muted: rgba(232, 230, 240, 0.42);
+  --accent: #7b6ef6;
+  --accent-2: #22d3ee;
+  --success: #2dd4a0;
+  --warning: #f9a825;
+  --danger: #ff5555;
+  --shadow: 0 20px 80px rgba(0, 0, 0, 0.35);
+  --shadow-soft: 0 10px 35px rgba(0, 0, 0, 0.22);
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-head: 'Syne', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+html,
+body,
+#root {
+  min-height: 100%;
 }
 
 body {
   margin: 0;
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at top, rgba(124, 92, 252, 0.18), transparent 30%),
+    radial-gradient(circle at 80% 12%, rgba(34, 211, 238, 0.12), transparent 24%),
+    linear-gradient(180deg, #05060a 0%, #0a0b12 55%, #06070a 100%);
+  color: var(--text);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  width: 1126px;
+  position: relative;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+img,
+svg {
+  display: block;
   max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
 }
 
 h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
+h2,
+h3,
+h4,
 p {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.app-shell,
+.page-shell,
+.auth-shell,
+.dashboard-shell,
+.job-page,
+.report-page,
+.career-page,
+.upload-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.page-shell,
+.auth-shell,
+.dashboard-shell,
+.job-page,
+.report-page,
+.career-page,
+.upload-page {
+  padding: 32px 24px 48px;
+}
+
+.page-grid-bg,
+.dashboard-grid-bg,
+.job-grid-bg,
+.report-grid-bg,
+.career-grid-bg,
+.upload-grid-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(123, 110, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123, 110, 246, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 80%);
+  opacity: 0.8;
+}
+
+.glow,
+.soft-glow {
+  position: fixed;
+  inset: auto auto 0 50%;
+  width: 760px;
+  height: 540px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(ellipse, rgba(124, 92, 252, 0.2) 0%, transparent 70%);
+}
+
+.soft-glow.secondary {
+  top: 30vh;
+  left: auto;
+  right: -120px;
+  width: 320px;
+  height: 320px;
+  transform: none;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.16), transparent 68%);
+  filter: blur(16px);
+}
+
+.glass-panel,
+.auth-card,
+.section-card,
+.stat-card,
+.company-table,
+.roadmap-card,
+.skill-card,
+.upload-card,
+.job-card,
+.report-card,
+.score-card,
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px);
+}
+
+.auth-card {
+  width: min(1240px, 100%);
+  min-height: 760px;
+  margin: 2vh auto 0;
+  padding: 0;
+}
+
+.auth-card--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr);
+  overflow: hidden;
+}
+
+.auth-aside {
+  padding: clamp(2.5rem, 4.6vw, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.45rem;
+  background:
+    radial-gradient(circle at top left, rgba(123, 110, 246, 0.22), transparent 38%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.auth-aside .auth-title {
+  font-size: clamp(3.3rem, 5.7vw, 5.6rem);
+  line-height: 0.88;
+  max-width: 7ch;
+}
+
+.auth-aside .auth-subtitle {
+  max-width: 36rem;
+  font-size: 1.08rem;
+}
+
+.auth-points {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.auth-point {
+  padding: 1.1rem 1.15rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: grid;
+  gap: 0.25rem;
+}
+
+.auth-point strong {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  color: #fff;
+}
+
+.auth-point span {
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.auth-form-panel {
+  padding: clamp(2.2rem, 4vw, 3.35rem);
+  border: 0;
+  border-radius: 0;
+  background: rgba(5, 6, 10, 0.28);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.45rem;
+}
+
+.auth-form-head {
+  display: grid;
+  gap: 0.7rem;
+  padding-bottom: 1.15rem;
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.auth-panel-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  letter-spacing: -0.05em;
+  color: #fff;
+}
+
+.auth-hero {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.auth-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.section-card {
+  padding: 1.4rem;
+}
+
+.stat-card {
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.stat-kicker {
+  margin-bottom: 0.6rem;
+  font-size: 1.25rem;
+}
+
+.stat-title {
+  margin-bottom: 0.45rem;
+  font-size: 0.96rem;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.stat-value {
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  letter-spacing: -0.05em;
+  color: #fff;
+}
+
+.stat-subtitle {
+  margin-top: 0.3rem;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.skill-list,
+.roadmap-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skill-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.skill-item {
+  padding: 0.65rem 0.85rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.skill-item.green {
+  color: #7ff0c7;
+}
+
+.skill-item.red {
+  color: #ffabab;
+}
+
+.roadmap-week {
+  margin-top: 1rem;
+}
+
+.roadmap-week-title {
+  margin-bottom: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.roadmap-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.company-table {
+  overflow: hidden;
+}
+
+.table-rank,
+.table-company,
+.table-score {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.panel-title,
+.section-title,
+.dashboard-title,
+.upload-title,
+.report-title,
+.career-title,
+.auth-title {
+  font-family: var(--font-head);
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.panel-subtitle,
+.section-subtitle,
+.dashboard-subtitle,
+.upload-subtitle,
+.report-subtitle,
+.career-subtitle,
+.auth-subtitle {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.btn-primary,
+.action-btn,
+.upload-btn,
+.nav-button,
+.auth-submit,
+.analyse-btn,
+.job-action {
+  border: none;
+  border-radius: 16px;
+  padding: 1rem 1.35rem;
+  color: #fff;
+  background: #7b6ef6;
+  box-shadow: 0 0 0 1px rgba(123, 110, 246, 0.2), 0 18px 40px rgba(123, 110, 246, 0.24);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover,
+.action-btn:hover,
+.upload-btn:hover,
+.nav-button:hover,
+.auth-submit:hover,
+.analyse-btn:hover,
+.job-action:hover {
+  transform: translateY(-1px);
+  background: #9288f8;
+}
+
+.btn-secondary,
+.auth-secondary,
+.btn-ghost {
+  border: 1px solid rgba(123, 110, 246, 0.28);
+  background: rgba(123, 110, 246, 0.1);
+  color: #f5f3ff;
+  border-radius: 16px;
+  padding: 1rem 1.35rem;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+
+.auth-submit,
+.auth-secondary {
+  min-height: 60px;
+  font-size: 1.02rem;
+}
+
+.btn-secondary:hover,
+.auth-secondary:hover,
+.btn-ghost:hover {
+  transform: translateY(-1px);
+  border-color: rgba(123, 110, 246, 0.42);
+  background: rgba(123, 110, 246, 0.16);
+}
+
+.input,
+.field-input,
+.form-input,
+.job-textarea,
+.career-select,
+.api-key-input,
+.provider-select,
+.url-input,
+.chat-input {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.field-input {
+  min-height: 60px;
+  padding: 1rem 1.05rem;
+  font-size: 1.03rem;
+}
+
+.input:focus,
+.field-input:focus,
+.form-input:focus,
+.job-textarea:focus,
+.career-select:focus,
+.api-key-input:focus,
+.provider-select:focus,
+.url-input:focus,
+.chat-input:focus {
+  border-color: rgba(123, 110, 246, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pill,
+.badge,
+.theme-chip,
+.skill-chip,
+.example-chip,
+.repo-pill,
+.nav-tag,
+.report-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.8);
+  min-height: 40px;
+  padding-inline: 1rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-grid,
+.dashboard-grid,
+.report-grid,
+.career-grid,
+.feature-grid,
+.stats-grid,
+.how-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.metrics-grid,
+.dashboard-grid,
+.report-grid,
+.career-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.table-wrap {
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+th {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+textarea {
+  min-height: 220px;
+  resize: vertical;
+}
+
+@media (max-width: 768px) {
+  .page-shell,
+  .auth-shell,
+  .dashboard-shell,
+  .job-page,
+  .report-page,
+  .career-page,
+  .upload-page {
+    padding: 18px 16px 28px;
+  }
+
+  .auth-card--split {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-card {
+    min-height: auto;
+    margin-top: 0;
+  }
+
+  .auth-aside {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .auth-form-panel {
+    border-radius: 0;
+  }
 }

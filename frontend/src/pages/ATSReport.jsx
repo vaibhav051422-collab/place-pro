@@ -31,19 +31,23 @@ function ATSReport() {
     <>
     <Navbar />
 
+    <div className="report-page page-shell">
+
+      <div className="report-grid-bg" />
+
     <div className="report-container">
 
       {/* Header */}
 
       <div className="header">
-        <h1>PlacePro AI</h1>
-        <p>AI Powered Resume Analyzer</p>
-        <p>Resume analyzed successfully using PlacePro AI</p>
+        <h1 className="report-title">PlacePro AI</h1>
+        <p className="report-subtitle">AI Powered Resume Analyzer</p>
+        <p className="report-subtitle">Resume analyzed successfully using PlacePro AI</p>
       </div>
 
       {/* Circular ATS Score */}
 
-      <div className="score-card">
+      <div className="score-card report-card glass-panel">
 
         <svg
           width="220"
@@ -56,7 +60,7 @@ function ATSReport() {
             cx="110"
             cy="110"
             r="90"
-            stroke="#e5e7eb"
+            stroke="rgba(255,255,255,0.12)"
             strokeWidth="14"
             fill="none"
           />
@@ -94,7 +98,7 @@ function ATSReport() {
             y="132"
             textAnchor="middle"
             fontSize="18"
-            fill="#666"
+            fill="rgba(255,255,255,0.55)"
           >
             /100
           </text>
@@ -108,11 +112,11 @@ function ATSReport() {
 
       </div>
 
-      <div className="grid">
+      <div className="grid report-grid">
 
         {/* Score Breakdown */}
 
-        <div className="card">
+        <div className="card report-card glass-panel">
 
           <h2>ATS Score Breakdown</h2>
 
@@ -165,7 +169,7 @@ function ATSReport() {
 
         {/* Suggestions */}
 
-        <div className="card">
+        <div className="card report-card glass-panel">
 
           <h2>Suggestions</h2>
 
@@ -185,7 +189,7 @@ function ATSReport() {
 
         {/* Candidate Details */}
 
-        <div className="card info">
+        <div className="card info report-card glass-panel">
 
           <h2>Candidate Details</h2>
 
@@ -197,7 +201,7 @@ function ATSReport() {
 
         {/* Skills & Projects */}
 
-        <div className="card">
+        <div className="card report-card glass-panel">
 
           <h2>Technical Skills</h2>
 
@@ -224,30 +228,18 @@ function ATSReport() {
         </div>
 
       </div>
-    <div
-  style={{
-    textAlign: "center",
-    marginTop: "40px",
-    width: "100%"
-  }}
->
-  <button
-    onClick={() => {
-      window.location.href = "/job-match";
-    }}
-    style={{
-      padding: "14px 30px",
-      fontSize: "16px",
-      border: "none",
-      borderRadius: "10px",
-      background: "#2563eb",
-      color: "white",
-      cursor: "pointer"
-    }}
-  >
-    Next → Job Description Matching
-  </button>
+    <div style={{ textAlign: "center", marginTop: "2rem", width: "100%" }}>
+      <button
+        className="btn-primary"
+        onClick={() => {
+          window.location.href = "/job-match";
+        }}
+      >
+        Next → Job Description Matching
+      </button>
       </div>
+
+    </div>
 
     </div>
 

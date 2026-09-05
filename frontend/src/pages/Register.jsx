@@ -47,58 +47,88 @@ function Register() {
   };
 
   return (
+    <div className="auth-shell page-shell">
+      <div className="page-grid-bg" />
+      <div className="soft-glow" />
+      <div className="soft-glow secondary" />
 
-    <div style={{ padding: 40 }}>
+      <div className="auth-card glass-panel auth-card--split">
+        <div className="auth-aside">
+          <span className="pill">Create your account</span>
+          <h1 className="auth-title">Join PlacePro AI</h1>
+          <p className="auth-subtitle">
+            Unlock resume analysis, company matching, and AI-powered placement prep.
+          </p>
 
-      <h1>PlacePro AI</h1>
+          <div className="auth-points">
+            <div className="auth-point">
+              <strong>Fast setup</strong>
+              <span>Create your account in less than a minute.</span>
+            </div>
 
-      <h2>Create Account</h2>
+            <div className="auth-point">
+              <strong>Placement tools</strong>
+              <span>Use all dashboard features after registration.</span>
+            </div>
 
-      <input
-        placeholder="Full Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+            <div className="auth-point">
+              <strong>Cleaner layout</strong>
+              <span>The auth screens now feel larger and easier to use.</span>
+            </div>
+          </div>
+        </div>
 
-      <br /><br />
+        <div className="auth-form-panel glass-panel">
+          <div className="auth-form-head">
+            <span className="pill">New account</span>
+            <h2 className="auth-panel-title">Create your profile</h2>
+            <p className="auth-subtitle">
+              Add your details below to start using the platform.
+            </p>
+          </div>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+          <div className="auth-form">
+            <input
+              className="field-input"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-      <br /><br />
+            <input
+              className="field-input"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+            <input
+              className="field-input"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-      <br /><br />
+            <input
+              className="field-input"
+              type="password"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
 
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
+            <button className="btn-primary auth-submit" onClick={handleRegister}>
+              Register
+            </button>
 
-      <br /><br />
-
-      <button onClick={handleRegister}>
-        Register
-      </button>
-
-      <br /><br />
-
-      <button onClick={() => navigate("/")}>
-        Already have an account? Login
-      </button>
-
+            <button className="btn-ghost auth-secondary" onClick={() => navigate("/")}>
+              Already have an account? Login
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
   );

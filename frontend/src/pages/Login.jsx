@@ -53,39 +53,74 @@ function Login() {
   };
 
   return (
-    <div style={{ padding: "40px" }}>
-      <h1>PlacePro AI</h1>
+    <div className="auth-shell page-shell">
+      <div className="page-grid-bg" />
+      <div className="soft-glow" />
+      <div className="soft-glow secondary" />
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <div className="auth-card glass-panel auth-card--split">
+        <div className="auth-aside">
+          <span className="pill">Placement readiness suite</span>
+          <h1 className="auth-title">PlacePro AI</h1>
+          <p className="auth-subtitle">
+            A focused workspace for resume analysis, company matching,
+            and placement prep.
+          </p>
 
-      <br />
-      <br />
+          <div className="auth-points">
+            <div className="auth-point">
+              <strong>Resume score</strong>
+              <span>See how your CV performs before you apply.</span>
+            </div>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+            <div className="auth-point">
+              <strong>AI guidance</strong>
+              <span>Get targeted suggestions for interviews and skills.</span>
+            </div>
 
-      <br />
-      <br />
+            <div className="auth-point">
+              <strong>Placement ready</strong>
+              <span>Track what matters with a cleaner, bigger interface.</span>
+            </div>
+          </div>
+        </div>
 
-      <button onClick={handleLogin}>
-        Login
-      </button>
+        <div className="auth-form-panel glass-panel">
+          <div className="auth-form-head">
+            <span className="pill">Welcome back</span>
+            <h2 className="auth-panel-title">Sign in to continue</h2>
+            <p className="auth-subtitle">
+              Use the email and password you registered with.
+            </p>
+          </div>
 
-      <br />
-      <br />
+          <div className="auth-form">
+            <input
+              className="field-input"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-      <button onClick={() => navigate("/register")}>
-        Create New Account
-      </button>
+            <input
+              className="field-input"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <button className="btn-primary auth-submit" onClick={handleLogin}>
+              Login
+            </button>
+
+            <button className="btn-ghost auth-secondary" onClick={() => navigate("/register")}>
+              Create New Account
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

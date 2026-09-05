@@ -106,9 +106,11 @@ localStorage.setItem(
 
             <Navbar />
 
-            <div className="page">
+            <div className="upload-page page-shell">
 
-                <div className="upload-container">
+                <div className="upload-grid-bg" />
+
+                <div className="upload-container glass-panel upload-card">
 
                     <h1 className="upload-title">
 
@@ -125,19 +127,13 @@ localStorage.setItem(
                     <label className="upload-box">
 
                         <input
-
+                            className="file-input"
                             type="file"
-
                             accept=".pdf"
-
                             hidden
-
                             onChange={(e) =>
-
                                 setFile(e.target.files[0])
-
                             }
-
                         />
 
                         <h2>

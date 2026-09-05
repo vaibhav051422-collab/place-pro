@@ -6,22 +6,11 @@ function CompanyTable({
 
     return (
 
-        <div
-            style={{
-                background: "white",
-                padding: "25px",
-                borderRadius: "15px",
-                boxShadow: "0 4px 15px rgba(0,0,0,.08)"
-            }}
-        >
+        <div className="glass-panel section-card company-table">
 
-            <h2>Top Company Matches</h2>
+            <h2 className="section-title">Top Company Matches</h2>
 
-            <table
-                style={{
-                    width: "100%"
-                }}
-            >
+            <table>
 
                 <thead>
 

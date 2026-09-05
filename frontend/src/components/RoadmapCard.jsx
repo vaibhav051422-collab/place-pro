@@ -6,16 +6,9 @@ function RoadmapCard({
 
     return (
 
-        <div
-            style={{
-                background: "white",
-                padding: "25px",
-                borderRadius: "15px",
-                boxShadow: "0 4px 15px rgba(0,0,0,.08)"
-            }}
-        >
+        <div className="glass-panel section-card roadmap-card">
 
-            <h2>
+            <h2 className="section-title">
 
                 AI Career Roadmap
 
@@ -31,15 +24,15 @@ function RoadmapCard({
 
                 ["week1","week2","week3","week4"].map((week)=>(
 
-                    <div key={week}>
+                    <div key={week} className="roadmap-week">
 
-                        <h3>
+                        <h3 className="roadmap-week-title">
 
                             {week.toUpperCase()}
 
                         </h3>
 
-                        <ul>
+                        <ul className="roadmap-list">
 
                             {
 

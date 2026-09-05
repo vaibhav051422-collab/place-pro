@@ -2,21 +2,9 @@ function SectionCard({ title, children }) {
 
     return (
 
-        <div
-            style={{
-                background: "#fff",
-                padding: "25px",
-                borderRadius: "16px",
-                boxShadow: "0 8px 25px rgba(0,0,0,.08)",
-                marginTop: "30px"
-            }}
-        >
+        <div className="glass-panel section-card">
 
-            <h2
-                style={{
-                    marginBottom: "20px"
-                }}
-            >
+            <h2 className="section-title">
                 {title}
             </h2>
 
