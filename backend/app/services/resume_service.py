@@ -18,12 +18,8 @@ def extract_text_from_pdf(pdf_path: str):
 def parse_resume(text: str):
     data = {}
 
-    # ---------------- Name ----------------
-
     lines = [line.strip() for line in text.split("\n") if line.strip()]
     data["name"] = lines[0] if lines else ""
-
-    # ---------------- Email ----------------
 
     email = re.search(
         r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}",
@@ -32,16 +28,12 @@ def parse_resume(text: str):
 
     data["email"] = email.group(0) if email else ""
 
-    # ---------------- Phone ----------------
-
     phone = re.search(
         r"(\+91[- ]?)?[6-9]\d{9}",
         text
     )
 
     data["phone"] = phone.group(0) if phone else ""
-
-    # ---------------- Skills ----------------
 
     skill_list = [
         "Python",
@@ -73,15 +65,18 @@ def parse_resume(text: str):
 
     data["skills"] = found_skills
 
-    # ---------------- Education ----------------
-
     education_keywords = [
         "B.Tech",
+        "B.E",
+        "M.Tech",
         "Bachelor",
+        "Master",
         "Computer Science",
-        "Graphic Era",
+        "Information Technology",
+        "Engineering",
         "University",
-        "College"
+        "College",
+        "Institute"
     ]
 
     education = []
@@ -94,23 +89,52 @@ def parse_resume(text: str):
 
     data["education"] = list(dict.fromkeys(education))
 
-    # ---------------- Projects ----------------
+    section_headings = [
+        "experience", "education", "skills", "certifications",
+        "achievements", "internship", "internships", "extracurricular",
+        "contact", "summary", "objective", "languages", "hobbies",
+        "publications", "awards", "declaration"
+    ]
 
-    project_names = [
-        "NovaPass",
-        "FriendBook",
-        "NewsScope"
+    projects_headings = [
+        "projects", "project", "academic projects",
+        "personal projects", "technical projects", "major projects"
     ]
 
     projects = []
+    in_projects_section = False
+    current_project = ""
 
-    for project in project_names:
-        if project.lower() in text.lower():
-            projects.append(project)
+    for line in lines:
+        lower = line.lower().strip(" :-")
+
+        if lower in projects_headings:
+            in_projects_section = True
+            current_project = ""
+            continue
+
+        if in_projects_section:
+            if lower in section_headings:
+                if current_project:
+                    projects.append(current_project.strip())
+                    current_project = ""
+                in_projects_section = False
+                continue
+
+            bullet_starts = ("-", "•", "*", "▪", "◦")
+            if line.startswith(bullet_starts) or (
+                current_project == "" or len(line) < 60
+            ):
+                if current_project:
+                    projects.append(current_project.strip())
+                current_project = line.lstrip("-•*▪◦ ").strip()
+            else:
+                current_project += " " + line
+
+    if current_project:
+        projects.append(current_project.strip())
 
     data["projects"] = projects
-
-    # ---------------- Experience ----------------
 
     experience_keywords = [
         "Intern",
@@ -133,10 +157,6 @@ def parse_resume(text: str):
     return data
 
 
-# ==========================================================
-# ATS SCORE ENGINE
-# ==========================================================
-
 def calculate_ats_score(parsed_resume):
     score = {
         "contact": 0,
@@ -148,8 +168,6 @@ def calculate_ats_score(parsed_resume):
         "suggestions": []
     }
 
-    # ---------------- Contact (15 Marks) ----------------
-
     if parsed_resume.get("name"):
         score["contact"] += 5
 
@@ -158,8 +176,6 @@ def calculate_ats_score(parsed_resume):
 
     if parsed_resume.get("phone"):
         score["contact"] += 5
-
-    # ---------------- Skills (30 Marks) ----------------
 
     skill_count = len(parsed_resume.get("skills", []))
 
@@ -175,8 +191,6 @@ def calculate_ats_score(parsed_resume):
             "Add more relevant technical skills."
         )
 
-    # ---------------- Education (20 Marks) ----------------
-
     if len(parsed_resume.get("education", [])) > 0:
         score["education"] = 20
     else:
@@ -184,8 +198,6 @@ def calculate_ats_score(parsed_resume):
         score["suggestions"].append(
             "Add your education details."
         )
-
-    # ---------------- Projects (25 Marks) ----------------
 
     project_count = len(parsed_resume.get("projects", []))
 
@@ -201,8 +213,6 @@ def calculate_ats_score(parsed_resume):
             "Include technical projects."
         )
 
-    # ---------------- Experience (10 Marks) ----------------
-
     if len(parsed_resume.get("experience", [])) > 0:
         score["experience"] = 10
     else:
@@ -210,8 +220,6 @@ def calculate_ats_score(parsed_resume):
         score["suggestions"].append(
             "Gain internship or work experience."
         )
-
-    # ---------------- Overall ----------------
 
     score["overall"] = (
         score["contact"] +
